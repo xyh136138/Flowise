@@ -455,6 +455,96 @@
             ]
         },
         {
+            "name": "chatBaichuan",
+            "models": [
+                {
+                    "label": "Baichuan4",
+                    "name": "Baichuan4"
+                },
+                {
+                    "label": "Baichuan3-Turbo",
+                    "name": "Baichuan3-Turbo"
+                },
+                {
+                    "label": "Baichuan3-Turbo-128k",
+                    "name": "Baichuan3-Turbo-128k"
+                },
+                {
+                    "label": "Baichuan2-Turbo",
+                    "name": "Baichuan2-Turbo"
+                },
+                {
+                    "label": "Baichuan2-Turbo-192k",
+                    "name": "Baichuan2-Turbo-192k"
+                }
+            ]
+        },
+        {
+            "name": "chatAlibabaTongyi",
+            "models": [
+                {
+                    "label": "qwen-turbo",
+                    "name": "qwen-turbo"
+                },
+                {
+                    "label": "qwen-plus",
+                    "name": "qwen-plus"
+                },
+                {
+                    "label": "qwen-max",
+                    "name": "qwen-max"
+                },
+                {
+                    "label": "qwen-max-1201",
+                    "name": "qwen-max-1201"
+                },
+                {
+                    "label": "qwen-max-longcontext",
+                    "name": "qwen-max-longcontext"
+                },
+                {
+                    "label": "qwen-7b-chat",
+                    "name": "qwen-7b-chat"
+                },
+                {
+                    "label": "qwen-14b-chat",
+                    "name": "qwen-14b-chat"
+                },
+                {
+                    "label": "qwen-72b-chat",
+                    "name": "qwen-72b-chat"
+                },
+                {
+                    "label": "llama2-7b-chat-v2",
+                    "name": "llama2-7b-chat-v2"
+                },
+                {
+                    "label": "llama2-13b-chat-v2",
+                    "name": "llama2-13b-chat-v2"
+                },
+                {
+                    "label": "baichuan-7b-v1",
+                    "name": "baichuan-7b-v1"
+                },
+                {
+                    "label": "baichuan2-13b-chat-v1",
+                    "name": "baichuan2-13b-chat-v1"
+                },
+                {
+                    "label": "baichuan2-7b-chat-v1",
+                    "name": "baichuan2-7b-chat-v1"
+                },
+                {
+                    "label": "chatglm3-6b",
+                    "name": "chatglm3-6b"
+                },
+                {
+                    "label": "chatglm-6b-v2",
+                    "name": "chatglm-6b-v2"
+                }
+            ]
+        },
+        {
             "name": "chatOpenAI",
             "models": [
                 {

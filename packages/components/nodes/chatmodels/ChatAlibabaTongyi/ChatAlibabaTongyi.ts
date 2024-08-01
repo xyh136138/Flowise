@@ -1,10 +1,10 @@
 import { BaseCache } from '@langchain/core/caches'
-import { ChatBaiduWenxin } from '@langchain/community/chat_models/baiduwenxin'
+import { ChatAlibabaTongyi } from '@langchain/community/chat_models/alibaba_tongyi'
 import { ICommonObject, INode, INodeData, INodeOptionsValue, INodeParams } from '../../../src/Interface'
 import { getBaseClasses, getCredentialData, getCredentialParam } from '../../../src/utils'
 import { MODEL_TYPE, getModels } from '../../../src/modelLoader'
 
-class ChatBaiduWenxin_ChatModels implements INode {
+class ChatAlibabaTongyi_ChatModels implements INode {
     label: string
     name: string
     version: number
@@ -17,19 +17,19 @@ class ChatBaiduWenxin_ChatModels implements INode {
     inputs: INodeParams[]
 
     constructor() {
-        this.label = 'ChatBaiduWenxin'
-        this.name = 'chatBaiduWenxin'
+        this.label = 'ChatAlibabaTongyi'
+        this.name = 'chatAlibabaTongyi'
         this.version = 1.0
-        this.type = 'ChatBaiduWenxin'
-        this.icon = 'baiduwenxin.svg'
+        this.type = 'ChatAlibabaTongyi'
+        this.icon = 'ChatAlibabaTongyi.svg'
         this.category = 'Chat Models'
-        this.description = 'Wrapper around BaiduWenxin Chat Endpoints'
-        this.baseClasses = [this.type, ...getBaseClasses(ChatBaiduWenxin)]
+        this.description = 'Wrapper around AlibabaTongyi Chat Endpoints'
+        this.baseClasses = [this.type, ...getBaseClasses(ChatAlibabaTongyi)]
         this.credential = {
             label: 'Connect Credential',
             name: 'credential',
             type: 'credential',
-            credentialNames: ['baiduApi']
+            credentialNames: ['alibabaApiKey']
         }
         this.inputs = [
             {
@@ -39,18 +39,18 @@ class ChatBaiduWenxin_ChatModels implements INode {
                 optional: true
             },
             {
-                label: 'Model',
-                name: 'modelName',
+                label: 'Model Name',
+                name: 'model',
                 type: 'asyncOptions',
                 loadMethod: 'listModels',
-                default: 'ERNIE-Bot-turbo'
+                default: 'qwen-turbo'
             },
             {
                 label: 'Temperature',
                 name: 'temperature',
                 type: 'number',
                 step: 0.1,
-                default: 0.9,
+                default: 0.7,
                 optional: true
             }
         ]
@@ -59,7 +59,7 @@ class ChatBaiduWenxin_ChatModels implements INode {
     //@ts-ignore
     loadMethods = {
         async listModels(): Promise<INodeOptionsValue[]> {
-            return await getModels(MODEL_TYPE.CHAT, 'chatBaiduWenxin')
+            return await getModels(MODEL_TYPE.CHAT, 'chatAlibabaTongyi')
         }
     }
 
@@ -69,21 +69,19 @@ class ChatBaiduWenxin_ChatModels implements INode {
         const modelName = nodeData.inputs?.modelName as string
 
         const credentialData = await getCredentialData(nodeData.credential ?? '', options)
-        const baiduApiKey = getCredentialParam('baiduApiKey', credentialData, nodeData)
-        const baiduSecretKey = getCredentialParam('baiduSecretKey', credentialData, nodeData)
+        const alibabaApiKey = getCredentialParam('alibabaApiKey', credentialData, nodeData)
 
-        const obj: Partial<ChatBaiduWenxin> = {
+        const obj: Partial<ChatAlibabaTongyi> = {
             streaming: true,
-            baiduApiKey,
-            baiduSecretKey,
+            alibabaApiKey,
             modelName,
             temperature: temperature ? parseFloat(temperature) : undefined
         }
         if (cache) obj.cache = cache
 
-        const model = new ChatBaiduWenxin(obj)
+        const model = new ChatAlibabaTongyi(obj)
         return model
     }
 }
 
-module.exports = { nodeClass: ChatBaiduWenxin_ChatModels }
+module.exports = { nodeClass: ChatAlibabaTongyi_ChatModels }

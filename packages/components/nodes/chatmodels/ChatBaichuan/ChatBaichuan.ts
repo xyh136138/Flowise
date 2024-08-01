@@ -1,10 +1,10 @@
 import { BaseCache } from '@langchain/core/caches'
-import { ChatBaiduWenxin } from '@langchain/community/chat_models/baiduwenxin'
+import { ChatBaichuanzhinengBaichuan } from '@langchain/community/chat_models/baichuanzhineng_baichuan'
 import { ICommonObject, INode, INodeData, INodeOptionsValue, INodeParams } from '../../../src/Interface'
 import { getBaseClasses, getCredentialData, getCredentialParam } from '../../../src/utils'
 import { MODEL_TYPE, getModels } from '../../../src/modelLoader'
 
-class ChatBaiduWenxin_ChatModels implements INode {
+class ChatBaichuanzhinengBaichuan_ChatModels implements INode {
     label: string
     name: string
     version: number
@@ -17,19 +17,19 @@ class ChatBaiduWenxin_ChatModels implements INode {
     inputs: INodeParams[]
 
     constructor() {
-        this.label = 'ChatBaiduWenxin'
-        this.name = 'chatBaiduWenxin'
+        this.label = 'ChatBaichuanzhinengBaichuan'
+        this.name = 'chatBaichuanzhinengBaichuan'
         this.version = 1.0
-        this.type = 'ChatBaiduWenxin'
-        this.icon = 'baiduwenxin.svg'
+        this.type = 'ChatBaichuanzhinengBaichuan'
+        this.icon = 'ChatBaichuanzhinengBaichuan.svg'
         this.category = 'Chat Models'
-        this.description = 'Wrapper around BaiduWenxin Chat Endpoints'
-        this.baseClasses = [this.type, ...getBaseClasses(ChatBaiduWenxin)]
+        this.description = 'Wrapper around BaichuanzhinengBaichuan Chat Endpoints'
+        this.baseClasses = [this.type, ...getBaseClasses(ChatBaichuanzhinengBaichuan)]
         this.credential = {
             label: 'Connect Credential',
             name: 'credential',
             type: 'credential',
-            credentialNames: ['baiduApi']
+            credentialNames: ['chatBaichuanzhinengBaichuan']
         }
         this.inputs = [
             {
@@ -38,19 +38,25 @@ class ChatBaiduWenxin_ChatModels implements INode {
                 type: 'BaseCache',
                 optional: true
             },
+            // {
+            //     label: 'Model Name',
+            //     name: 'model',
+            //     type: 'asyncOptions',
+            //     loadMethod: 'listModels',
+            //     default: 'Baichuan4'
+            // },
             {
-                label: 'Model',
-                name: 'modelName',
-                type: 'asyncOptions',
-                loadMethod: 'listModels',
-                default: 'ERNIE-Bot-turbo'
+                label: 'Model Name',
+                name: 'model',
+                type: 'string',
+                placeholder: 'Baichuan4'
             },
             {
                 label: 'Temperature',
                 name: 'temperature',
                 type: 'number',
                 step: 0.1,
-                default: 0.9,
+                default: 0.7,
                 optional: true
             }
         ]
@@ -59,7 +65,7 @@ class ChatBaiduWenxin_ChatModels implements INode {
     //@ts-ignore
     loadMethods = {
         async listModels(): Promise<INodeOptionsValue[]> {
-            return await getModels(MODEL_TYPE.CHAT, 'chatBaiduWenxin')
+            return await getModels(MODEL_TYPE.CHAT, 'chatBaichuanzhinengBaichuan')
         }
     }
 
@@ -69,21 +75,19 @@ class ChatBaiduWenxin_ChatModels implements INode {
         const modelName = nodeData.inputs?.modelName as string
 
         const credentialData = await getCredentialData(nodeData.credential ?? '', options)
-        const baiduApiKey = getCredentialParam('baiduApiKey', credentialData, nodeData)
-        const baiduSecretKey = getCredentialParam('baiduSecretKey', credentialData, nodeData)
+        const apiKey = getCredentialParam('apiKey', credentialData, nodeData)
 
-        const obj: Partial<ChatBaiduWenxin> = {
-            streaming: true,
-            baiduApiKey,
-            baiduSecretKey,
-            modelName,
+        const obj: Partial<ChatBaichuanzhinengBaichuan> = {
+            stream: true,
+            apiKey,
+            model: modelName,
             temperature: temperature ? parseFloat(temperature) : undefined
         }
         if (cache) obj.cache = cache
 
-        const model = new ChatBaiduWenxin(obj)
+        const model = new ChatBaichuanzhinengBaichuan(obj)
         return model
     }
 }
 
-module.exports = { nodeClass: ChatBaiduWenxin_ChatModels }
+module.exports = { nodeClass: ChatBaichuanzhinengBaichuan_ChatModels }
